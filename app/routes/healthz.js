@@ -3,10 +3,6 @@
 const express = require('express');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.json(products);
-});
-
 router.get('/healthz', (req, res, next) => {
   const statusOK = {
     "status": "OK"

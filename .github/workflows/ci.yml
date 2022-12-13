@@ -2,7 +2,7 @@
 name: Build and Test
 on:
   pull_request:
-    types: [opened,reopened,synchronized]
+    type: [opened,reopened,synchronized]
   push:
     branches:
       - main
@@ -28,16 +28,15 @@ jobs:
           node-version: 18
 
       # ESLint and Prettier must be in `package.json`
-      - name: install node dependencies
-        working-directory: "${{ github.workspace }}/app"
-        run: |
-          npm ci
+#- name: install node dependencies
+#        working-directory: "${{ github.workspace }}/app"
+#        run: |
+#          npm ci
 
-      - uses: wearerequired/lint-action@v2
-        working-directory: "${{ github.workspace }}/app"
+      - uses: reviewdog/action-eslint@v1
         with:
-          eslint: true
-          prettier: true
+          reporter: github-check
+          workdir: 'app/'
 
   build:
     runs-on: ubuntu-22.04
