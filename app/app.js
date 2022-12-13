@@ -1,13 +1,13 @@
 // -- --
 // -- app.js
-const express = require('express');
-const healthz = require('./routes/healthz');
-const app = express();
+const express = require('express')
+const healthz = require('./routes/healthz')
+const app = express()
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }))
 
-app.use(express.json());
+app.use(express.json())
 
-app.use('/', healthz);
+app.use('/', healthz)
 
-module.exports = app;
+module.exports = app

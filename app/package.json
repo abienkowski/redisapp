@@ -13,5 +13,6 @@
     "eslint-plugin-n": "^15.6.0",
     "eslint-plugin-promise": "^6.1.1",
     "prettier": "^2.8.1"
-  }
+  },
+  "eslintConfig": ".eslintrc.yml"
 }
