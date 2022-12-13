@@ -7,7 +7,7 @@ networks:
 
 services:
 
-  app:
+  podinfo:
     image: node18:redis
     networks:
       - redis
