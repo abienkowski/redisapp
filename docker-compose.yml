@@ -11,6 +11,8 @@ services:
     image: node18:redis
     networks:
       - redis
+    ports:
+      - "3000:3000"
 
   redis:
     image: redis:alpine3.17
