@@ -1,0 +1,22 @@
+---
+version: '3'
+
+networks:
+  redis:
+    name: redis
+
+services:
+
+  podinfo:
+    image: node18:redis
+    networks:
+      - redis
+    ports:
+      - "3000:3000"
+
+  redis:
+    image: redis:alpine3.17
+    networks:
+      redis:
+        aliases:
+          - redis
