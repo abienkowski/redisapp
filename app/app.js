@@ -2,6 +2,7 @@
 // -- app.js
 const express = require('express')
 const app = express()
+const redis = require('redis')
 
 // -- create redis client
 const redisClient = redis.createClient({ url: process.env.REDIS_URL })
