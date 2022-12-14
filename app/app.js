@@ -3,6 +3,9 @@
 const express = require('express')
 const app = express()
 
+// -- create redis client
+const redisClient = redis.createClient({ url: process.env.REDIS_URL })
+
 const delay = require('./routes/delay')
 const env = require('./routes/env')
 const healthz = require('./routes/healthz')
