@@ -1,5 +1,5 @@
 ---
-version: '3'
+version: '3.8'
 
 networks:
   redis:
@@ -9,6 +9,8 @@ services:
 
   podinfo:
     image: node18:redis
+    environment:
+      - REDIS_URL=redis://redis:6379
     networks:
       - redis
     ports:

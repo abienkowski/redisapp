@@ -1,6 +1,12 @@
 // -- --
 // -- app.test.js
 const supertest = require('supertest')
+jest.mock('redis', () => jest.requireActual('redis-mock'))
+const getRedisClient = require('../helpers/redis-helper')
+const redisClient = getRedisClient('fake:6379')
+redisClient.isReady = true
+redisClient.isOpen = true
+console.log(`redis client ${redisClient.isReady}`)
 const app = require('../app')
 
 test('liveness probe', async () => {
