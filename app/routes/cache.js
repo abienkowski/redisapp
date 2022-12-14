@@ -30,7 +30,6 @@ router.get('/cache/:key', (req, res, next) => {
 router.post('/cache/:key', (req, res, next) => {
   const key = req.params.key
 
-  console.log(`post cache ${key} client ${redisClient}`)
   if (redisClient) {
     // let pong
     let value

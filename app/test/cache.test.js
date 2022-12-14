@@ -10,9 +10,6 @@ redisClient.isOpen = true
 console.log(`redis client ${redisClient.isReady}`)
 const app = require('../app')
 
-console.log(`keys: ${Object.keys(redisClient)}`)
-console.log(`keys: ${Object.keys(redisClient._redisMock)}`)
-
 describe('cache', () => {
   test('cache post', async () => {
     const payload = {
