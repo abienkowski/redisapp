@@ -3,6 +3,8 @@ on:
   workflow_run:
     workflows: ["Build and Test"]
     types: [requested]
+    branches:
+      - main
 
 concurrency: 
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -15,6 +17,15 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+
+      - uses: actions/download-artifacts@v3
+        with:
+          name: abienkow-redisapp
+          path: /tmp
+
+      - name: load image
+        run: |
+          docker load -i /tmp/redisapp.tar
 
       - name: deploy app
         uses: sudo-bot/action-docker-compose@latest
