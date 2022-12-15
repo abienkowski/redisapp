@@ -76,6 +76,16 @@ jobs:
         run: |
           docker images
 
+      - name: upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: abienkow-redisapp
+          path: /tmp/redisapp.tar
+
+      - name: load image
+        run: |
+          docker load -i /tmp/redisapp.tar
+
       - name: deploy app
         uses: sudo-bot/action-docker-compose@latest
         with:
@@ -91,10 +101,3 @@ jobs:
       - name: debug curl
         run: |
           curl -v http://127.0.0.1:3000/healthz
-
-
-      - name: upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: abienkow-redisapp
-          path: /tmp/redisapp.tar
