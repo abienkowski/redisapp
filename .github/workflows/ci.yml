@@ -10,7 +10,7 @@ on:
       - v\d+\.\d+\.\d+
 
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -69,11 +69,12 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: "."
+          load: true
           push: false
-          tags: abienkow/node-redis
+          tags: abienkow/redisapp
           cache-to: type=gha
           cache-from: type=gha
-          outputs: type=docker,dest=/tmp/node-redis.tar
+          outputs: type=docker,dest=/tmp/redisapp.tar
 
       - name: debug
         run: |
@@ -83,4 +84,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: node-redis
-          path: /tmp/node-redis.tar
+          path: /tmp/redisapp.tar
