@@ -1,0 +1,27 @@
+---
+name: Lint
+on:
+  workflow_call:
+
+concurrency:
+  group: lint-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  
+  lint:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: checkout code
+        uses: actions/checkout@v3
+
+      - name: setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 18
+
+      - uses: reviewdog/action-eslint@v1
+        with:
+          reporter: github-check
+          workdir: 'app/'
