@@ -12,8 +12,8 @@ concurrency:
 
 jobs:
 
-  build-test:
-    uses: "./.github/workflows/ci.yml"
+  build:
+    uses: "./.github/workflows/build.yml"
 
   deploy-app:
     runs-on: ubuntu-22.04
