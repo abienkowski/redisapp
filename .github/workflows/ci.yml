@@ -94,10 +94,14 @@ jobs:
       - name: debug
         run: |
           docker ps
+          echo "docker images"
           docker images
+          echo "network ls"
           docker network ls
+          echo "logs"
           docker logs workspace-podinfo-1
 
       - name: debug curl
         run: |
-          curl -v http://127.0.0.1:3000/healthz
+          sleep 1
+          curl -v --retry 5 http://127.0.0.1:3000/healthz
