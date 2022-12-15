@@ -20,11 +20,11 @@ router.get('/readyz', (req, res, next) => {
 })
 
 router.get('/readyz/enable', (req, res, next) => {
-  res.sendStatus(202)
+  res.status(202).end()
 })
 
 router.get('/readyz/disable', (req, res, next) => {
-  res.sendStatus(202)
+  res.status(202).end()
 })
 
 module.exports = router

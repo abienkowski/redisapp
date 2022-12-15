@@ -17,7 +17,7 @@ router.get('/cache/:key', (req, res, next) => {
           const data = JSON.parse(value)
           res.json(data)
         } else {
-          res.sendStatus(404)
+          res.status(404).end()
         }
       })
       .catch(err => {
@@ -45,7 +45,7 @@ router.post('/cache/:key', (req, res, next) => {
       await redisClient.set(key, strPayload)
     })()
     console.log('post await send status')
-    res.sendStatus(202)
+    res.status(202).end()
   } else {
     res.json({
       code: 400,
@@ -66,7 +66,7 @@ router.put('/cache/:key', (req, res, next) => {
       await redisClient.set(key, payload)
     })()
     console.log('post await send status')
-    res.sendStatus(202)
+    res.status(202).end()
   } else {
     res.json({
       code: 400,
@@ -85,7 +85,7 @@ router.delete('/cache/:key', (req, res, next) => {
       await redisClient.del(key)
     })()
     console.log('delete await send status')
-    res.sendStatus(202)
+    res.status(202).end()
   } else {
     res.json({
       code: 400,
