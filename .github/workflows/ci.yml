@@ -1,12 +1,16 @@
 ---
 name: Build and Test
 on:
-  workflow_call:
   pull_request:
-    types: [opened, reopened, synchronize]
+    type: [opened,reopened,synchronized]
+  push:
+    branches:
+      - main
+    tags:
+      - v\d+\.\d+\.\d+
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
