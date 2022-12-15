@@ -16,6 +16,7 @@ while (!redisClient.isOpen) {
   })()
 }
 
+const cache = require('./routes/cache')
 const delay = require('./routes/delay')
 const env = require('./routes/env')
 const healthz = require('./routes/healthz')
@@ -26,6 +27,7 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 // -- add routes
+app.use('/', cache)
 app.use('/', delay)
 app.use('/', env)
 app.use('/', healthz)
