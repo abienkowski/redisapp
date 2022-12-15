@@ -1,12 +1,16 @@
 ---
 name: Build and Test
 on:
-  workflow_call:
   pull_request:
-    types: [opened, reopened, synchronize]
+    type: [opened,reopened,synchronized]
+  push:
+    branches:
+      - main
+    tags:
+      - v\d+\.\d+\.\d+
 
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -81,27 +85,3 @@ jobs:
         with:
           name: abienkow-redisapp
           path: /tmp/redisapp.tar
-
-      - name: load image
-        run: |
-          docker load -i /tmp/redisapp.tar
-
-      - name: deploy app
-        uses: sudo-bot/action-docker-compose@latest
-        with:
-          cli-args: "up -d"
-
-      - name: debug
-        run: |
-          docker ps
-          echo "docker images"
-          docker images
-          echo "network ls"
-          docker network ls
-          echo "logs"
-          docker logs workspace-podinfo-1
-
-      - name: debug curl
-        run: |
-          sleep 1
-          curl -v --retry 5 http://127.0.0.1:3000/healthz
