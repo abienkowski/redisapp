@@ -7,7 +7,7 @@ on:
       - v\d+\.\d+\.\d+
 
 concurrency: 
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: cd-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
