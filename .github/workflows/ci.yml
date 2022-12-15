@@ -76,6 +76,23 @@ jobs:
         run: |
           docker images
 
+      - name: deploy app
+        uses: sudo-bot/action-docker-compose@latest
+        with:
+          cli-args: "up -d"
+
+      - name: debug
+        run: |
+          docker ps
+          docker images
+          docker network ls
+          docker logs workspace-podinfo-1
+
+      - name: debug curl
+        run: |
+          curl -v http://127.0.0.1:3000/healthz
+
+
       - name: upload artifact
         uses: actions/upload-artifact@v3
         with:
