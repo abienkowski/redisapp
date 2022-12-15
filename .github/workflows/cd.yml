@@ -1,16 +1,19 @@
 name: Deploy App
 on:
-  workflow_run:
-    workflows: ["Build and Test"]
-    types: [completed]
+  push:
     branches:
       - main
+    tags:
+      - v\d+\.\d+\.\d+
 
 concurrency: 
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
+
+  build-test:
+    uses: "./.github/workflows/ci.yml"
 
   deploy-app:
     runs-on: ubuntu-22.04
