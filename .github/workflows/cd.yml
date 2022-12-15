@@ -17,7 +17,7 @@ jobs:
 
   deploy-app:
     runs-on: ubuntu-22.04
-    needs: build-test
+    needs: build
 
     steps:
       - uses: actions/checkout@v3
