@@ -38,45 +38,45 @@ jobs:
 
       - name: debug
         run: |
-          echo ">>> docker ps"
+          echo "\n>>> docker ps"
           docker ps
-          echo ">>> docker images"
+          echo "\n>>> docker images"
           docker images
-          echo ">>> docker network ls"
+          echo "\n>>> docker network ls"
           docker network ls
-          echo ">>> docker logs podinfo"
+          echo "\n>>> docker logs podinfo"
           docker logs workspace-podinfo-1
 
       - name: Show Endpoints
         run: |
           # -- give container a seconds to start
           sleep 1
-          echo ">>> curl healthz"
-          curl --retry 5 http://localhost:3000/healthz
-          echo ">>> curl readyz"
-          curl --retry 5 http://localhost:3000/readyz
-          echo ">>> curl readyz/enable"
-          curl --retry 5 -v http://localhost:3000/readyz/enable
-          echo ">>> curl readyz/disable"
-          curl --retry 5 -v http://localhost:3000/readyz/disable
-          echo ">>> curl env"
-          curl --retry 5 http://localhost:3000/env
-          echo ">>> curl headers"
-          curl --retry 5 http://localhost:3000/headers
-          echo ">>> curl delay/3"
+          echo "\n>>> curl healthz"
+          curl --retry 5 -q http://localhost:3000/healthz
+          echo "\n>>> curl readyz"
+          curl --retry 5 -q http://localhost:3000/readyz
+          echo "\n>>> curl readyz/enable"
+          curl --retry 5 -v -q http://localhost:3000/readyz/enable
+          echo "\n>>> curl readyz/disable"
+          curl --retry 5 -v -q http://localhost:3000/readyz/disable
+          echo "\n>>> curl env"
+          curl --retry 5 -q http://localhost:3000/env | jq .
+          echo "\n>>> curl headers"
+          curl --retry 5 -q http://localhost:3000/headers | jq .
+          echo "\n>>> curl delay/3"
           time curl http://localhost:3000/delay/3
-          echo ">>> curl delay/5"
+          echo "\n>>> curl delay/5"
           time curl http://localhost:3000/delay/5
 
       - name: Show Bonus Endpoints
         run: |
-          echo ">>> curl POST cache/foo"
-          curl -X POST -H "content-type: application/json" -d '{"unicorn":"magic"}' -v  http://localhost:3000/cache/foo
-          echo ">>> curl GET cache/foo"
-          curl -X GET http://localhost:3000/cache/foo | jq .
-          echo ">>> curl DELETE cache/foo"
-          curl -X DELETE -v http://localhost:3000/cache/foo
-          echo ">>> remove redis container"
+          echo "\n>>> curl POST cache/foo"
+          curl -X POST -q -H "content-type: application/json" -d '{"unicorn":"magic"}' -v  http://localhost:3000/cache/foo
+          echo "\n>>> curl GET cache/foo"
+          curl -X GET -q http://localhost:3000/cache/foo | jq .
+          echo "\n>>> curl DELETE cache/foo"
+          curl -X DELETE -v -q http://localhost:3000/cache/foo
+          echo "\n>>> remove redis container"
           docker rm -f workspace-redis-1
-          echo ">>> curl GET cache/foo"
-          curl -X GET http://localhost:3000/cache/foo | jq .
+          echo "\n>>> curl GET cache/foo"
+          curl -X GET -q http://localhost:3000/cache/foo | jq .
