@@ -8,7 +8,7 @@ networks:
 services:
 
   podinfo:
-    image: node18:redisapp
+    image: abienkow/redisapp
     environment:
       - REDIS_URL=redis://redis:6379
     networks:
