@@ -1,0 +1,48 @@
+name: Deploy App
+on:
+  workflow_run:
+    workflows: ["Build and Test"]
+    types: [requested]
+
+concurrency: 
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+
+  deploy-app:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: deploy app
+        uses: sudo-bot/action-docker-compose@latest
+        with:
+          cli-args: "up -d"
+
+      - name: debug
+        run: |
+          docker ps
+          docker images
+          docker network ls
+          docker logs workspace-podinfo-1
+
+      - name: Show Endpoints
+        run: |
+          curl http://localhost:3000/healthz
+          curl http://localhost:3000/readyz
+          curl -v http://localhost:3000/readyz/enable
+          curl -v http://localhost:3000/readyz/disable
+          curl http://localhost:3000/env
+          curl http://localhost:3000/headers
+          time curl http://localhost:3000/delay/3
+          time curl http://localhost:3000/delay/5
+
+      - name: Show Bonus Endpoints
+        run: |
+          curl -X POST -H "content-type: application/json" -d '{"unicorn":"magic"}' -v  http://localhost:3000/cache/foo
+          curl -X GET http://localhost:3000/cache/foo | jq .
+          curl -X DELETE -v http://localhost:3000/cache/foo
+          docker rm -f workspace-redis-1
+          curl -X GET http://localhost:3000/cache/foo | jq .
